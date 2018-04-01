@@ -14,6 +14,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
+import 'react-redux-toastr/lib/css/react-redux-toastr.min.css';
 import 'sanitize.css/sanitize.css';
 
 // Import root app

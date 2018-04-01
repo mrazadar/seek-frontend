@@ -3,27 +3,27 @@ export default {
     {
       id: 1,
       username: 'default',
-      email: 'default@abc.com',
+      email: 'default@seek.com',
       password: '123',
     }, {
       id: 2,
       username: 'unilever',
-      email: 'unilever@abc.com',
+      email: 'unilever@seek.com',
       password: '123',
     }, {
       id: 3,
       username: 'apple',
-      email: 'apple@abc.com',
+      email: 'apple@seek.com',
       password: '123',
     }, {
       id: 4,
       username: 'nike',
-      email: 'nike@abc.com',
+      email: 'nike@seek.com',
       password: '123',
     }, {
       id: 5,
       username: 'ford',
-      email: 'ford@abc.com',
+      email: 'ford@seek.com',
       password: '123',
     },
   ],

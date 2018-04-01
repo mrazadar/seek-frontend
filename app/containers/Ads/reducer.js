@@ -1,6 +1,6 @@
 /*
  *
- * Advertisements reducer
+ * Ads reducer
  *
  */
 
@@ -11,7 +11,7 @@ import {
 
 const initialState = fromJS({});
 
-function advertisementsReducer(state = initialState, action) {
+function adsReducer(state = initialState, action) {
   switch (action.type) {
     case DEFAULT_ACTION:
       return state;
@@ -20,4 +20,4 @@ function advertisementsReducer(state = initialState, action) {
   }
 }
 
-export default advertisementsReducer;
+export default adsReducer;

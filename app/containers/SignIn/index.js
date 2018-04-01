@@ -18,7 +18,7 @@ import Button from 'components/Button';
 
 
 import { signInUser } from './actions';
-import { makeSelectSignInSuccess, makeSelectSignInError } from './selectors';
+import { makeSelectUserSignInSuccess, makeSelectUserSignInError } from './selectors';
 import saga from './saga';
 
 import Wrapper from './CenteredWrapper';
@@ -33,8 +33,8 @@ class SignIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
+      email: 'ford@seek.com',
+      password: '123',
       formSubmitted: false,
       showLadda: false,
     };
@@ -55,7 +55,7 @@ class SignIn extends React.Component {
       }
     }
     if (nextProps.error) {
-      Toastr({ title: 'Error', msg: error.message, type: 'warning' });
+      Toastr({ title: 'Error', msg: error.message, type: 'error' });
       this.setState({
         showLadda: false,
       });
@@ -69,10 +69,11 @@ class SignIn extends React.Component {
           Sign In.
         </MainHeading>
         <Form onSubmit={this.handleSubmit} noValidate="true">
+
           {this.FormInput('email', 'email')}
           {this.FormInput('password', 'password')}
 
-          <Button loading={this.state.showLadda} btnType="yellow" type="submit">
+          <Button loading={this.state.showLadda} btnType="black" type="submit">
             Sign In
           </Button>
         </Form>
@@ -164,8 +165,8 @@ export function mapDispatchToProps(dispatch) {
 }
 
 const mapStateToProps = createStructuredSelector({
-  userSignInSuccess: makeSelectSignInSuccess(),
-  error: makeSelectSignInError(),
+  userSignInSuccess: makeSelectUserSignInSuccess(),
+  error: makeSelectUserSignInError(),
 });
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

@@ -1,6 +1,6 @@
 /**
  *
- * Asynchronously loads the component for Advertisements
+ * Asynchronously loads the component for Ads
  *
  */
 
@@ -10,5 +10,5 @@ import LoadingIndicator from 'components/LoadingIndicator';
 
 export default Loadable({
   loader: () => import('./index'),
-  loading: () => LoadingIndicator,
+  loading: LoadingIndicator,
 });

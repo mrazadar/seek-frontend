@@ -1,22 +1,7 @@
-/**
-*
-* Form
-*
-*/
+import styled from 'styled-components';
 
-import React from 'react';
-// import styled from 'styled-components';
-
-
-function Form() {
-  return (
-    <div>
-    </div>
-  );
-}
-
-Form.propTypes = {
-
-};
+const Form = styled.form`
+  padding: 50px 0;
+`;
 
 export default Form;

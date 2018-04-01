@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 /**
  * Direct selector to the signIn state domain
  */
-const selectSignIn = (state) => state.get('signIn');
+const selectSignIn = (state) => state.get('signin');
 
 /**
  * Other specific selectors
@@ -19,20 +19,20 @@ const makeSelectUser = () => createSelector(
   (substate) => substate.get('user')
 );
 
-const makeSelectSignInSuccess = () => createSelector(
+const makeSelectUserSignInSuccess = () => createSelector(
   selectSignIn,
-  (substate) => substate.get('signInSuccess')
+  (substate) => substate.get('userSignInSuccess')
 );
 
-const makeSelectSignInError = () => createSelector(
+const makeSelectUserSignInError = () => createSelector(
   selectSignIn,
-  (substate) => substate.get('signInError')
+  (substate) => substate.get('userSignInError')
 );
 
 
 export {
   selectSignIn,
   makeSelectUser,
-  makeSelectSignInSuccess,
-  makeSelectSignInError,
+  makeSelectUserSignInSuccess,
+  makeSelectUserSignInError,
 };

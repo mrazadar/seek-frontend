@@ -14,17 +14,17 @@ const buttonStyles = css`
   box-shadow: 0 0 80px rgba(0, 0, 0, 0.5);
   cursor:pointer;
   &:hover{
-    background:${VARS.$black}
+    background:${VARS.$dark}
   }
   &.ladda-button[disabled], 
   &.ladda-button[disabled]:hover, 
   &.ladda-button[data-loading], 
   &.ladda-button[data-loading]:hover{
-   background: ${VARS.gray} !important; 
+   background: ${VARS.black} !important; 
   }
 
-  background: ${VARS.$gray};
-  color: ${VARS.$dark};
+  background: ${VARS.$black};
+  color: ${VARS.$white};
   font-size: 16px;
   height: 50px;
   margin-bottom: 10px;

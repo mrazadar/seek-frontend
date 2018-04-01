@@ -15,33 +15,37 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import ReduxToastr from 'react-redux-toastr';
+import Header from 'containers/Header';
 
+// import { userIsAuthenticated, userIsNotAuthenticated } from 'utils/Helpers/reduxAuth';
+import AdsPage from 'containers/Ads/Loadable';
 
-import { userIsAuthenticated, userIsNotAuthenticated } from 'utils/Helpers/reduxAuth';
-
-import AdvertisementsPage from 'containers/Advertisements/Loadable';
+// import AdvertisementsPage from 'containers/Advertisements/Loadable';
 import SignInPage from 'containers/SignIn/Loadable';
 
-import AdminPage from 'containers/Admin/Loadable';
+// import AdminPage from 'containers/Admin/Loadable';
 import CheckoutPage from 'containers/Checkout/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 
-const Advertisements = userIsNotAuthenticated(AdvertisementsPage);
-const SignIn = userIsNotAuthenticated(SignInPage);
+// const Advertisements = userIsNotAuthenticated(AdvertisementsPage);
+// const SignIn = userIsNotAuthenticated(SignInPage);
 
-const Admin = userIsAuthenticated(AdminPage);
-const Checkout = userIsAuthenticated(CheckoutPage);
+// const Admin = userIsAuthenticated(AdminPage);
+// const Checkout = userIsAuthenticated(CheckoutPage);
 
 
 export default function App() {
   return (
     <div>
+      <Header />
       <Switch>
-        <Route exact path="/" component={Advertisements} />
-        <Route exact path="/signin" component={SignIn} />
+        <Route exact path="/" component={AdsPage} />
+        <Route path="/signin" component={SignInPage} />
+        <Route path="/checkout" component={CheckoutPage} />
+        {/* <Route exact path="/signin" component={SignIn} />
         <Route exact path="/admin" component={Admin} />
-        <Route exact path="/checkout" component={Checkout} />
+        <Route exact path="/checkout" component={Checkout} /> */}
         <Route component={NotFoundPage} />
       </Switch>
       <ReduxToastr

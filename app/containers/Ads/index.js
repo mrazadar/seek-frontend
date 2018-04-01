@@ -1,6 +1,6 @@
 /**
  *
- * Admin
+ * Ads
  *
  */
 
@@ -11,29 +11,34 @@ import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
-import injectReducer from 'utils/injectReducer';
-import makeSelectAdmin from './selectors';
-import reducer from './reducer';
+import H3 from 'components/H3';
 
-export class Admin extends React.Component { // eslint-disable-line react/prefer-stateless-function
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
+import makeSelectAds from './selectors';
+import reducer from './reducer';
+import saga from './saga';
+
+export class Ads extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
       <div>
         <Helmet>
-          <title>Admin</title>
-          <meta name="description" content="Description of Admin" />
+          <title>Ads</title>
+          <meta name="description" content="Description of Ads" />
         </Helmet>
+        <H3>Ads Page</H3>
       </div>
     );
   }
 }
 
-Admin.propTypes = {
+Ads.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
-  admin: makeSelectAdmin(),
+  ads: makeSelectAds(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -44,9 +49,11 @@ function mapDispatchToProps(dispatch) {
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-const withReducer = injectReducer({ key: 'admin', reducer });
+const withReducer = injectReducer({ key: 'ads', reducer });
+const withSaga = injectSaga({ key: 'ads', saga });
 
 export default compose(
   withReducer,
+  withSaga,
   withConnect,
-)(Admin);
+)(Ads);

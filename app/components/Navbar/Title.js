@@ -5,7 +5,7 @@ import { VARS } from 'styled-variables';
 const ProjectTitle = styled(Link)`
   font-size:19px;
   text-transform: uppercase;
-  color: ${VARS.$black};
+  color: ${VARS.$white};
   line-height: 60px;
   font-weight: 300;
   letter-spacing: 2px;
