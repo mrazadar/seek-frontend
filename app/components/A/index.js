@@ -1,22 +1,19 @@
-/**
-*
-* A
-*
-*/
 
-import React from 'react';
-// import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { VARS } from 'styled-variables';
 
 
-function A() {
-  return (
-    <div>
-    </div>
-  );
-}
+export const linkStyles = css`
+  color: ${({ color }) => color ? VARS[`$${color}`] : VARS.$dark};
+  cursor: pointer;
+  
+  /*&:hover {
+    color: ${VARS.$whiteHover};
+  }*/
+  text-decoration: none;
+  margin-right:15px;
+`;
 
-A.propTypes = {
-
-};
+const A = styled.a`${linkStyles}`;
 
 export default A;

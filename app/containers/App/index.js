@@ -14,16 +14,45 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
-import HomePage from 'containers/HomePage/Loadable';
+import ReduxToastr from 'react-redux-toastr';
+
+
+import { userIsAuthenticated, userIsNotAuthenticated } from 'utils/Helpers/reduxAuth';
+
+import AdvertisementsPage from 'containers/Advertisements/Loadable';
+import SignInPage from 'containers/SignIn/Loadable';
+
+import AdminPage from 'containers/Admin/Loadable';
+import CheckoutPage from 'containers/Checkout/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
+
+
+const Advertisements = userIsNotAuthenticated(AdvertisementsPage);
+const SignIn = userIsNotAuthenticated(SignInPage);
+
+const Admin = userIsAuthenticated(AdminPage);
+const Checkout = userIsAuthenticated(CheckoutPage);
+
 
 export default function App() {
   return (
     <div>
       <Switch>
-        <Route exact path="/" component={HomePage} />
+        <Route exact path="/" component={Advertisements} />
+        <Route exact path="/signin" component={SignIn} />
+        <Route exact path="/admin" component={Admin} />
+        <Route exact path="/checkout" component={Checkout} />
         <Route component={NotFoundPage} />
       </Switch>
+      <ReduxToastr
+        timeOut={3000}
+        newestOnTop={false}
+        preventDuplicates
+        position="top-right"
+        transitionIn="bounceIn"
+        transitionOut="bounceOut"
+        progressBar
+      />
     </div>
   );
 }

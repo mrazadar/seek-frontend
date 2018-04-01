@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 /**
  * Direct selector to the signIn state domain
  */
-const selectSignInDomain = (state) => state.get('signIn');
+const selectSignIn = (state) => state.get('signIn');
 
 /**
  * Other specific selectors
@@ -14,12 +14,25 @@ const selectSignInDomain = (state) => state.get('signIn');
  * Default selector used by SignIn
  */
 
-const makeSelectSignIn = () => createSelector(
-  selectSignInDomain,
-  (substate) => substate.toJS()
+const makeSelectUser = () => createSelector(
+  selectSignIn,
+  (substate) => substate.get('user')
 );
 
-export default makeSelectSignIn;
+const makeSelectSignInSuccess = () => createSelector(
+  selectSignIn,
+  (substate) => substate.get('signInSuccess')
+);
+
+const makeSelectSignInError = () => createSelector(
+  selectSignIn,
+  (substate) => substate.get('signInError')
+);
+
+
 export {
-  selectSignInDomain,
+  selectSignIn,
+  makeSelectUser,
+  makeSelectSignInSuccess,
+  makeSelectSignInError,
 };

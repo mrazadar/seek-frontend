@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import { VARS } from 'styled-variables';
 
-const P = styled.p`
-  font-weight: 300;
-  color: ${VARS.$black};
-`;
 
-export default P;
+export default styled.h2`
+  color:${VARS.$black};
+  margin:0;
+  font-weight: 300;
+  font-size: 30px;
+`;

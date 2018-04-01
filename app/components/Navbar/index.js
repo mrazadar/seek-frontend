@@ -1,22 +1,9 @@
-/**
-*
-* Navbar
-*
-*/
+import styled from 'styled-components';
 
-import React from 'react';
-// import styled from 'styled-components';
+const NavBar = styled.div`
+  height: 60px;
+  font-size: 14px;
+  padding:0 30px;
+`;
 
-
-function Navbar() {
-  return (
-    <div>
-    </div>
-  );
-}
-
-Navbar.propTypes = {
-
-};
-
-export default Navbar;
+export default NavBar;

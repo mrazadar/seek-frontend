@@ -1,22 +1,20 @@
-/**
-*
-* ListItem
-*
-*/
-
 import React from 'react';
-// import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 
-function ListItem() {
-  return (
-    <div>
-    </div>
+import ListItemWrapper from './ListItemWrapper';
+
+
+const ListItem = ({ item, className }) => (
+  <ListItemWrapper className={className}>
+    <p>{item.name}</p>
+  </ListItemWrapper>
   );
-}
+
 
 ListItem.propTypes = {
-
+  item: PropTypes.object.isRequired,
+  className: PropTypes.string,
 };
 
 export default ListItem;

@@ -1,52 +1,178 @@
-/**
- *
- * SignIn
- *
- */
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import { createStructuredSelector } from 'reselect';
+
+import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+import injectSaga from 'utils/injectSaga';
 
-import injectReducer from 'utils/injectReducer';
-import makeSelectSignIn from './selectors';
-import reducer from './reducer';
+import Toastr from 'utils/Helpers/toastr';
 
-export class SignIn extends React.Component { // eslint-disable-line react/prefer-stateless-function
+
+import H1 from 'components/H1';
+import Form from 'components/Form';
+import Input from 'components/Input';
+import Button from 'components/Button';
+
+
+import { signInUser } from './actions';
+import { makeSelectSignInSuccess, makeSelectSignInError } from './selectors';
+import saga from './saga';
+
+import Wrapper from './CenteredWrapper';
+
+const MainHeading = H1.extend`
+  font-size: 35px;
+  letter-spacing:3px;
+`;
+
+
+class SignIn extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+      formSubmitted: false,
+      showLadda: false,
+    };
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+
+  componentWillReceiveProps(nextProps) {
+    const { userSignInSuccess: success, error } = nextProps;
+    if (this.props.userSignInSuccess !== success) {
+      this.setState({
+        showLadda: false,
+      });
+
+      if (success) {
+        this.props.history.push('/checkout');
+      }
+    }
+    if (nextProps.error) {
+      Toastr({ title: 'Error', msg: error.message, type: 'warning' });
+      this.setState({
+        showLadda: false,
+      });
+    }
+  }
+
+  getForm() {
+    return (
+      <Wrapper>
+        <MainHeading>
+          Sign In.
+        </MainHeading>
+        <Form onSubmit={this.handleSubmit} noValidate="true">
+          {this.FormInput('email', 'email')}
+          {this.FormInput('password', 'password')}
+
+          <Button loading={this.state.showLadda} btnType="yellow" type="submit">
+            Sign In
+          </Button>
+        </Form>
+      </Wrapper>
+    );
+  }
+
+  FormInput(type, field) {
+    return (
+      <Input
+        type={type}
+        value={this.state[field]}
+        className={this.hasError(field) ? 'error' : ''}
+        placeholder={field}
+        innerRef={(c) => { this[field] = c; }}
+        name={field}
+        onChange={this.handleChange}
+        required="true"
+      />
+    );
+  }
+
+
+  hasError(field) {
+    if (this.state.formSubmitted) {
+      const elem = this[field];
+      const isValid = elem && elem.validity.valid;
+      return !isValid ? 'error' : '';
+    }
+    return false;
+  }
+
+  handleChange(evt) {
+    const { target } = evt;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    this.setState({
+      [target.name]: value,
+    });
+  }
+
+  handleSubmit(evt) {
+    evt.preventDefault();
+    this.setState({
+      formSubmitted: true,
+    });
+    if (evt.target.checkValidity()) {
+      const data = {
+        email: this.state.email,
+        password: this.state.password,
+      };
+      this.setState({
+        showLadda: true,
+      });
+      this.props.onSignIn(data);
+    }
+  }
+
+
   render() {
     return (
       <div>
         <Helmet>
-          <title>SignIn</title>
-          <meta name="description" content="Description of SignIn" />
+          <title>Seek - SignIn</title>
+          <meta name="description" content="Sign-In page." />
         </Helmet>
+        {this.getForm()}
       </div>
     );
   }
 }
 
 SignIn.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  error: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.bool,
+  ]),
+  userSignInSuccess: PropTypes.bool,
+  onSignIn: PropTypes.func,
+  history: PropTypes.object,
 };
 
-const mapStateToProps = createStructuredSelector({
-  signin: makeSelectSignIn(),
-});
 
-function mapDispatchToProps(dispatch) {
+export function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    onSignIn: (data) => {
+      dispatch(signInUser(data));
+    },
   };
 }
 
+const mapStateToProps = createStructuredSelector({
+  userSignInSuccess: makeSelectSignInSuccess(),
+  error: makeSelectSignInError(),
+});
+
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 
-const withReducer = injectReducer({ key: 'signIn', reducer });
+const withSaga = injectSaga({ key: 'account', saga });
 
 export default compose(
-  withReducer,
+  withSaga,
   withConnect,
 )(SignIn);

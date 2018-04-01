@@ -5,8 +5,10 @@
 import { combineReducers } from 'redux-immutable';
 import { fromJS } from 'immutable';
 import { LOCATION_CHANGE } from 'react-router-redux';
+import { reducer as toastrReducer } from 'react-redux-toastr';
 
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
+import singinReducer from 'containers/SignIn/reducer';
 
 /*
  * routeReducer
@@ -43,6 +45,8 @@ export default function createReducer(injectedReducers) {
   return combineReducers({
     route: routeReducer,
     language: languageProviderReducer,
+    signin: singinReducer,
+    toastr: toastrReducer, // <- Mounted at toastr.
     ...injectedReducers,
   });
 }
