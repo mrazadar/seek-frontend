@@ -16,10 +16,24 @@ const selectAdsDomain = (state) => state.get('ads');
 
 const makeSelectAds = () => createSelector(
   selectAdsDomain,
-  (substate) => substate.toJS()
+  (substate) => substate.get('ads')
 );
 
-export default makeSelectAds;
+
+const makeSelectFetchAdsSuccess = () => createSelector(
+  selectAdsDomain,
+  (substate) => substate.get('fetchAdsSuccess')
+);
+
+
+const makeSelectFetchAdsError = () => createSelector(
+  selectAdsDomain,
+  (substate) => substate.get('fetchAdsError')
+);
+
 export {
   selectAdsDomain,
+  makeSelectAds,
+  makeSelectFetchAdsSuccess,
+  makeSelectFetchAdsError,
 };

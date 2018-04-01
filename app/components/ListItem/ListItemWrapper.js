@@ -1,25 +1,28 @@
 import styled from 'styled-components';
-
-
-export const UserInfo = styled.div`
-  font-size:18px;
-  display:inline-block;
-  position:relative;
-  .user-rating-country{
-    .user-rating{
-      &:after{
-        content: "|";
-        padding:0 15px;
-      };
-    }
-  }
-`;
+import { VARS } from 'styled-variables';
 
 
 const ListItemWrapper = styled.div`
   padding:20px 30px;
   font-weight:500;
-  
+  border:1px solid ${VARS.$gray};
+  margin: ${({ adType }) => adType === 'premium' ? '10px' : 0};
+  ${
+    (props) => {
+      if (props.adType === 'premium') {
+        return `
+          & .title{
+            color:green;
+          }
+        `;
+      }
+      return `
+          color:${VARS.$black};
+      `;
+    }
+
+
+}  
 `;
 
 export default ListItemWrapper;

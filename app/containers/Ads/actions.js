@@ -5,11 +5,27 @@
  */
 
 import {
-  DEFAULT_ACTION,
+  FETCH_ADS,
+  FETCH_ADS_SUCCESS,
+  FETCH_ADS_ERROR,
 } from './constants';
 
-export function defaultAction() {
+export function fetchAds() {
   return {
-    type: DEFAULT_ACTION,
+    type: FETCH_ADS,
+  };
+}
+
+export function fetchAdsSuccess(data) {
+  return {
+    type: FETCH_ADS_SUCCESS,
+    data,
+  };
+}
+
+export function fetchAdsError(error) {
+  return {
+    type: FETCH_ADS_ERROR,
+    error,
   };
 }

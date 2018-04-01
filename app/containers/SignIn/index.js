@@ -62,24 +62,6 @@ class SignIn extends React.Component {
     }
   }
 
-  getForm() {
-    return (
-      <Wrapper>
-        <MainHeading>
-          Sign In.
-        </MainHeading>
-        <Form onSubmit={this.handleSubmit} noValidate="true">
-
-          {this.FormInput('email', 'email')}
-          {this.FormInput('password', 'password')}
-
-          <Button loading={this.state.showLadda} btnType="black" type="submit">
-            Sign In
-          </Button>
-        </Form>
-      </Wrapper>
-    );
-  }
 
   FormInput(type, field) {
     return (
@@ -130,7 +112,24 @@ class SignIn extends React.Component {
       this.props.onSignIn(data);
     }
   }
+  renderForm() {
+    return (
+      <Wrapper>
+        <MainHeading>
+          Sign In.
+        </MainHeading>
+        <Form onSubmit={this.handleSubmit} noValidate="true">
 
+          {this.FormInput('email', 'email')}
+          {this.FormInput('password', 'password')}
+
+          <Button loading={this.state.showLadda} btnType="black" type="submit">
+            Sign In
+          </Button>
+        </Form>
+      </Wrapper>
+    );
+  }
 
   render() {
     return (
@@ -139,7 +138,7 @@ class SignIn extends React.Component {
           <title>Seek - SignIn</title>
           <meta name="description" content="Sign-In page." />
         </Helmet>
-        {this.getForm()}
+        {this.renderForm()}
       </div>
     );
   }

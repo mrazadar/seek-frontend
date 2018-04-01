@@ -9,5 +9,5 @@ export default styled.h3`
   text-transform: uppercase;
   padding: 19px 30px;
   margin: 0;
-  border-bottom: 1px solid ${VARS.$black};
+  /*border-bottom: 1px solid ${VARS.$black};*/
 `;
