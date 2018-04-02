@@ -10,16 +10,39 @@
  */
 
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 
-import messages from './messages';
+import { VARS } from 'styled-variables';
+import H1 from 'components/H1';
+import P from 'components/P';
+import CenterdWrapper from 'containers/SignIn/CenteredWrapper';
+
+const NotFoundWrapper = CenterdWrapper.extend`
+  top:35%;
+  width:100%;
+  margin-top: 70px;
+  h1{
+    color: ${VARS.$dark};
+  }
+  p{
+    color: ${VARS.$black};
+  }
+`;
+
+const BigH1 = H1.extend`
+  font-weight: 800;
+  font-size: 20em;
+`;
 
 export default class NotFound extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   render() {
     return (
-      <h1>
-        <FormattedMessage {...messages.header} />
-      </h1>
+      <NotFoundWrapper>
+        <BigH1>
+          404
+        </BigH1>
+        <H1>This page does not exist.</H1>
+        <P>The link you clicked may be broken or the page may have been removed.</P>
+      </NotFoundWrapper>
     );
   }
 }

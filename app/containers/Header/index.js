@@ -4,7 +4,11 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
 import Navbar from 'components/Navbar';
+import { linkStyles } from 'components/A';
 import Title from 'components/Navbar/Title';
 
 import { makeSelectUser } from 'containers/SignIn/selectors';
@@ -14,6 +18,10 @@ import { makeSelectLocation } from 'containers/App/selectors';
 
 import RightArea from './RightArea';
 
+const AdminLink = styled(Link)`
+  ${linkStyles}
+  padding-left:70px;
+`;
 
 class Header extends React.Component { // eslint-disable-line react/prefer-stateless-function
   render() {
@@ -22,6 +30,7 @@ class Header extends React.Component { // eslint-disable-line react/prefer-state
         <Title to="/">
           Seek Checkout System
         </Title>
+        <AdminLink to="/admin" color="white">Admin</AdminLink>
         <RightArea
           location={this.props.location}
           user={this.props.user}

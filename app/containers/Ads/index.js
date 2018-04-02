@@ -37,54 +37,43 @@ export class Ads extends React.Component { // eslint-disable-line react/prefer-s
     super(props);
     this.state = {
       search: '',
-      filteredAds: this.props.ads,
+      filteredAds: [],
     };
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
+
 
   componentDidMount() {
     this.props.fetchAds();
   }
 
-  hasError(field) {
-    if (this.state.formSubmitted) {
-      const elem = this[field];
-      const isValid = elem && elem.validity.valid;
-      return !isValid ? 'error' : '';
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.ads !== null) {
+      this.setState({
+        filteredAds: nextProps.ads.sort((a, b) => b.ad_type === 'premium'),
+      });
     }
-    return false;
   }
 
   handleChange(evt) {
     const { target } = evt;
     const value = target.type === 'checkbox' ? target.checked : target.value;
+    const { ads } = this.props;
     this.setState({
       [target.name]: value,
+      filteredAds: (value !== '') ? (ads.filter(({ title }) => title.toLowerCase().includes(value.toLowerCase()))) : ads,
     });
   }
 
-  handleSubmit(evt) {
-    evt.preventDefault();
-    this.setState({
-      formSubmitted: true,
-    });
-    if (evt.target.checkValidity()) {
-      this.setState({
-        // filteredAds: filter()
-      });
-    }
-  }
 
   renderSearchForm() {
     return (
-      <SearchForm onSubmit={this.handleSubmit} noValidate="true">
+      <SearchForm noValidate="true">
 
         <Input
           type="text"
           value={this.state.search}
-          className={this.hasError('search') ? 'error' : ''}
-          placeholder="Search Ads"
+          placeholder="Search by title"
           innerRef={(c) => { this.search = c; }}
           name="search"
           onChange={this.handleChange}
@@ -96,6 +85,7 @@ export class Ads extends React.Component { // eslint-disable-line react/prefer-s
   }
 
   render() {
+    const { filteredAds } = this.state;
     return (
       <div>
         <Helmet>
@@ -105,7 +95,7 @@ export class Ads extends React.Component { // eslint-disable-line react/prefer-s
         {/* <H3>Ads</H3> */}
         <AdsWrapper>
           {this.renderSearchForm()}
-          { this.state.filteredAds.length ? <List list={this.state.filteredAds} ItemComponent={Item} key="id" /> : null}
+          {filteredAds.length ? <List list={filteredAds} ItemComponent={Item} key="id" /> : null}
         </AdsWrapper>
       </div>
     );

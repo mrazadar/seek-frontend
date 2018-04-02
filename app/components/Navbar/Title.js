@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { VARS } from 'styled-variables';
 
-const ProjectTitle = styled(Link)`
+const Title = styled(Link)`
   font-size:19px;
   text-transform: uppercase;
   color: ${VARS.$white};
@@ -13,4 +13,4 @@ const ProjectTitle = styled(Link)`
   display: inline-block;
 `;
 
-export default ProjectTitle;
+export default Title;
