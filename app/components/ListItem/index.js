@@ -9,7 +9,7 @@ const ListItem = ({ item, className }) => (
   <ListItemWrapper className={className} adType={item.ad_type}>
     <div className="title">
       <div>{item.title}</div>
-      <div>{item.logo}</div>
+      {item.logo ? (<div className="logo"><img src={item.logo} alt="Logo" /></div>) : null}
     </div>
     <p className="desc">{item.description}</p>
   </ListItemWrapper>

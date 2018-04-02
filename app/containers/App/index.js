@@ -23,7 +23,7 @@ import AdsPage from 'containers/Ads/Loadable';
 // import AdvertisementsPage from 'containers/Advertisements/Loadable';
 import SignInPage from 'containers/SignIn/Loadable';
 
-// import AdminPage from 'containers/Admin/Loadable';
+import AdminPage from 'containers/Admin/Loadable';
 import CheckoutPage from 'containers/Checkout/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
@@ -43,6 +43,7 @@ export default function App() {
         <Route exact path="/" component={AdsPage} />
         <Route path="/signin" component={SignInPage} />
         <Route path="/checkout" component={CheckoutPage} />
+        <Route path="/admin" component={AdminPage} />
         {/* <Route exact path="/signin" component={SignIn} />
         <Route exact path="/admin" component={Admin} />
         <Route exact path="/checkout" component={Checkout} /> */}

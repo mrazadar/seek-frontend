@@ -7,10 +7,23 @@ const ListItemWrapper = styled.div`
   font-weight:500;
   border:1px solid ${VARS.$gray};
   margin: ${({ adType }) => adType === 'premium' ? '10px' : 0};
+  position:relative;
+  .logo{
+    position: absolute;
+    right:100px;
+    top:20px;
+    width:70px;
+    height:70px;
+    img {
+      width:50px;
+      height:50px;
+    }
+  }
   ${
     (props) => {
       if (props.adType === 'premium') {
         return `
+          border-color: green;
           & .title{
             color:green;
           }
