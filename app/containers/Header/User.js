@@ -1,14 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { VARS } from 'styled-variables';
 
 import A from 'components/A';
 
 const UserWrapper = styled.div`
+  width: 120px;
   a{    
     display: inline-block;
     vertical-align: top;
     padding: 0;
+    color: ${VARS.$white};
   }
   div{
     margin-right: 0;
@@ -20,7 +23,7 @@ const User = ({ user, logoutHandler }) => {
     return (
       <UserWrapper>
         <A onClick={logoutHandler}>Logout</A>
-        <p>{user.username}</p>
+        <A > {user.username}</A>
       </UserWrapper>
     );
   }

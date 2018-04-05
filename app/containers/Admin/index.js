@@ -15,19 +15,25 @@ import { compose } from 'redux';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
-// import Toastr from 'utils/Helpers/toastr';
+import find from 'lodash/find';
+import Toastr from 'utils/Helpers/toastr';
 
 
 import H1 from 'components/H1';
 import Form from 'components/Form';
 import Input from 'components/Input';
 import Button from 'components/Button';
+import LoadingIndicator from 'components/LoadingIndicator';
+import Toggle from 'components/Toggle';
 
+import { fetchCustomers, fetchAdTypes, addRule } from 'utils/request';
 import makeSelectAdmin from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
 import AdminWrapper from './AdminWrapper';
+
+// for easy access add 'saga+selectors' later
 
 export class Admin extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -37,11 +43,29 @@ export class Admin extends React.Component { // eslint-disable-line react/prefer
       offer: '',
       minimum: '',
       discount: '',
-      // ad_type: 'classic',
-      // customer_id: 2,
-      customer: null,
-      ad_type: null,
+      customer: '',
+      adType: '',
+      loading: true,
+      showLadda: false,
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleAdTypesChange = this.handleAdTypesChange.bind(this);
+    this.handleCustomerChange = this.handleCustomerChange.bind(this);
+  }
+
+
+  componentDidMount() {
+    const customers = fetchCustomers();
+    const adTypes = fetchAdTypes();
+
+    Promise.all([customers, adTypes]).then((results) => {
+      this.setState({
+        customers: results[0],
+        adTypes: Object.keys(results[1]),
+        loading: false,
+      });
+    });
   }
 
 
@@ -78,23 +102,48 @@ export class Admin extends React.Component { // eslint-disable-line react/prefer
     });
   }
 
+  handleCustomerChange(evt) {
+    const { value } = evt.target;
+    if (value) {
+      this.setState({
+        customer: evt.target.value,
+      });
+    }
+  }
+
+  handleAdTypesChange(evt) {
+    const { value } = evt.target;
+    if (value) {
+      this.setState({
+        adType: evt.target.value,
+      });
+    }
+  }
+
   handleSubmit(evt) {
     evt.preventDefault();
     this.setState({
       formSubmitted: true,
     });
     if (evt.target.checkValidity()) {
-      // const data = {
-      //   offer: this.state.offer,
-      //   minimum: this.state.minimum,
-      //   discount: this.state.discount,
-      //   password: this.state.password,
-      // };
-      // const data = this.state;
-      this.setState({
-        showLadda: true,
+      const data = {
+        offer: parseInt(this.state.offer, 10),
+        minimum: parseInt(this.state.minimum, 10),
+        discount: parseInt(this.state.discount, 10),
+        ad_type: this.state.adType,
+        customer_id: find(this.state.customers, (c) => this.state.customer === c.username).id,
+      };
+
+
+      const promise = addRule(data);
+      promise.then((res) => {
+        if (res.success) {
+          Toastr({ title: 'Rule Added', msg: res.message, type: 'success' });
+        }
+        this.setState({
+          showLadda: false,
+        });
       });
-      // this.props.onSignIn(data);
     }
   }
 
@@ -110,6 +159,10 @@ export class Admin extends React.Component { // eslint-disable-line react/prefer
           {this.FormInput('number', 'minimum')}
           {this.FormInput('number', 'discount')}
 
+
+          <Toggle value={this.state.adType} values={this.state.adTypes} onToggle={this.handleAdTypesChange} placeholder="Select Ad Type" />
+          <Toggle value={this.state.customer} values={this.state.customers.map((c) => c.username)} onToggle={this.handleCustomerChange} placeholder="Select Customer" />
+
           <Button loading={this.state.showLadda} btnType="black" type="submit">
             Add
           </Button>
@@ -120,6 +173,7 @@ export class Admin extends React.Component { // eslint-disable-line react/prefer
   }
 
   render() {
+    const { loading } = this.state;
     return (
       <div>
         <Helmet>
@@ -129,7 +183,7 @@ export class Admin extends React.Component { // eslint-disable-line react/prefer
 
         <AdminWrapper>
 
-          {this.renderRules()}
+          { loading ? <LoadingIndicator /> : this.renderRules() }
         </AdminWrapper>
       </div>
     );

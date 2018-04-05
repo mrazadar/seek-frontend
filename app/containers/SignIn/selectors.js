@@ -16,7 +16,15 @@ const selectSignIn = (state) => state.get('signin');
 
 const makeSelectUser = () => createSelector(
   selectSignIn,
-  (substate) => substate.get('user')
+  (substate) => {
+    let user = substate.get('user');
+    if (user && user.size) {
+      user = Array.from(user).reduce((myObj, [key, value]) => (
+        Object.assign(myObj, { [key]: value }) // Be careful! Maps can have non-String keys; object literals can't.
+      ), {});
+    }
+    return user;
+  }
 );
 
 const makeSelectUserSignInSuccess = () => createSelector(

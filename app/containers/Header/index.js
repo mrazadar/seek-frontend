@@ -18,7 +18,11 @@ import { makeSelectLocation } from 'containers/App/selectors';
 
 import RightArea from './RightArea';
 
-const AdminLink = styled(Link)`
+const LinkWrapper = styled.div`
+  display: inline-block;
+`;
+
+const NavLink = styled(Link)`
   ${linkStyles}
   padding-left:70px;
 `;
@@ -30,7 +34,17 @@ class Header extends React.Component { // eslint-disable-line react/prefer-state
         <Title to="/">
           Seek Checkout System
         </Title>
-        <AdminLink to="/admin" color="white">Admin</AdminLink>
+        {
+          this.props.user ?
+          (
+            <LinkWrapper>
+              {this.props.user.email === 'admin@seek.com' ? <NavLink to="/admin" color="white">Admin</NavLink> : null}
+              <NavLink to="/checkout" color="white">Checkout</NavLink>
+            </LinkWrapper>
+          )
+          : null
+        }
+
         <RightArea
           location={this.props.location}
           user={this.props.user}

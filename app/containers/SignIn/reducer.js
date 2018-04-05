@@ -5,14 +5,17 @@
  */
 
 import { fromJS } from 'immutable';
+import storage from 'utils/Helpers/storage';
 import {
   SIGN_IN_USER,
   SIGN_IN_USER_SUCCESS,
   SIGN_IN_USER_ERROR,
+  LOGOUT_USER,
 } from './constants';
 
+
 const initialState = fromJS({
-  user: null,
+  user: storage.getItem('seek.user') || null,
   userSignInSuccess: false,
   userSignInError: false,
 });
@@ -31,6 +34,12 @@ function signInReducer(state = initialState, action) {
     case SIGN_IN_USER_ERROR:
       return state
       .set('userSignInError', action.error);
+
+    case LOGOUT_USER:
+      return state
+      .set('user', null);
+
+
     default:
       return state;
   }

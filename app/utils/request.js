@@ -5,8 +5,16 @@ export const fetchAds = () => new Promise((resolve) => {
   resolve(db.ads);
 });
 
+export const fetchAdTypes = () => new Promise((resolve) => {
+  resolve(db.ad_types);
+});
+
 export const fetchCustomers = () => new Promise((resolve) => {
   resolve(db.customers);
+});
+
+export const fetchCustomersNames = () => new Promise((resolve) => {
+  resolve(db.customers.map((c) => c.username));
 });
 
 export const signIn = (customer) => new Promise((resolve, reject) => {
@@ -20,13 +28,20 @@ export const signIn = (customer) => new Promise((resolve, reject) => {
 });
 
 export const getRules = () => db.rules;
-export const addRules = (payload) => db.rules.push(payload);
+
+export const addRule = (payload) => new Promise((resolve) => {
+  db.rules.push(payload);
+  resolve({ success: true, message: 'Rule added successfully.', rules: db.rules });
+});
 
 
 export const getProducts = () => db.products;
 export const addProduct = (payload) => db.products.push(payload);
 
-const request = ({ method, payload }) => method(payload.payload);
+const request = ({ method, payload }) => {
+  const reqData = payload && payload.payload;
+  return method(reqData);
+};
 // {
 
   // return  new Promise((resolve, reject) => {
