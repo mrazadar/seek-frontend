@@ -26,6 +26,12 @@ export default {
       email: 'ford@seek.com',
       password: '123',
     },
+    {
+      id: 6,
+      username: 'Admin',
+      email: 'admin@seek.com',
+      password: '123',
+    },
   ],
   ad_types: {
     classic: {

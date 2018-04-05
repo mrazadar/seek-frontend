@@ -127,6 +127,9 @@ class SignIn extends React.Component {
             Sign In
           </Button>
         </Form>
+        <p>Admin credentials</p>
+        <p>email: admin@seek.com </p>
+        <p>Pass: 123</p>
       </Wrapper>
     );
   }
